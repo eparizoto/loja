@@ -13,6 +13,7 @@ import br.com.example.loja.modelo.Banco;
 import br.com.example.loja.modelo.Ingrediente;
 import br.com.example.loja.modelo.ItemCardapio;
 import br.com.example.loja.modelo.Lanche;
+import br.com.example.loja.modelo.Promocao;
 
 public class ClassesTest {
 
@@ -34,6 +35,34 @@ public class ClassesTest {
 		}
 
 		if (valorIngredientesXBacon == valorXBacon)
+			assertTrue(true);
+		else
+			assertTrue(false);
+	}
+	
+	@Test
+	public void testPrecoXBaconPromocaoMuitaCarne() {
+
+		Banco.getInstance();
+
+		Lanche xBacon = Banco.getLanche(ItemCardapio.XBACON);
+		
+		int totalDeCarneDoLanche = 21;
+		
+		for(int i = 1; i < totalDeCarneDoLanche; i++) {
+			
+			xBacon.add(Banco.getIngrediente(ItemCardapio.HAMBURGUER_CARNE));
+			
+		}
+
+		double valorXBaconSemPromocao = xBacon.getValor();
+		
+		xBacon.setPromocao(Promocao.MUITA_CARNE);
+		double valorXBaconNaPromocao = xBacon.getValor();
+		double valorXBaconNaPromocaoCalculado = valorXBaconSemPromocao - 
+				totalDeCarneDoLanche /3 *(Banco.getIngrediente(ItemCardapio.HAMBURGUER_CARNE).getValor());
+		
+		if (valorXBaconNaPromocao == valorXBaconNaPromocaoCalculado)
 			assertTrue(true);
 		else
 			assertTrue(false);

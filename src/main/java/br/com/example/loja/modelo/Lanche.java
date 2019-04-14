@@ -18,7 +18,7 @@ public class Lanche {
 		this.ingredientes = ingredientesLanche;
 		this.promocao = null;
 		this.valor = 0.00;
-		calculaPreco(this.promocao);				
+		calculaPrecoDoeLanche(this.promocao);				
 	}
 	
 	public Lanche(String nomeLanche, List<Ingrediente> ingredientesLanche, Promocao promocao) {
@@ -28,7 +28,7 @@ public class Lanche {
 		this.promocao = promocao;	
 		this.ingredientes = ingredientesLanche;
 		this.valor = 0.00;
-		calculaPreco(this.promocao);
+		calculaPrecoDoeLanche(this.promocao);
 	}
 	
 
@@ -64,13 +64,15 @@ public class Lanche {
 		this.ingredientes = ingredientes;
 	}
 
-	private void calculaPreco(Promocao promocao) {
+	private double calculaPrecoDoeLanche(Promocao promocao) {
+		
+		this.valor = 0.00;
 		
 		for (Ingrediente ingrediente : ingredientes)
 			this.valor += ingrediente.getValor();
 		
 		if(promocao == null)
-			return;
+			return 0.00;
 		
 		switch (promocao)
 		{
@@ -88,7 +90,6 @@ public class Lanche {
 				
 				long totalCarne = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.HAMBURGUER_CARNE.toString())).count();
 				long carneFree = totalCarne/3;
-				
 				this.valor = valor - (carneFree * Banco.getIngrediente(ItemCardapio.HAMBURGUER_CARNE).getValor());
 				
 				break;
@@ -97,12 +98,23 @@ public class Lanche {
 				
 				long totalQueijo = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.QUEIJO.toString())).count();
 				long queijoFree = totalQueijo/3;
-				
 				this.valor = valor - (queijoFree * Banco.getIngrediente(ItemCardapio.QUEIJO).getValor());
 				
 				break;
 		}
-			
+		
+		return this.valor;			
+	}
+	
+	public void setPromocao(Promocao promocao) {
+		calculaPrecoDoeLanche(promocao);		
+	}
+
+	public void add(Ingrediente ingrediente) {
+		
+		this.getIngredientes().add(ingrediente);
+		this.calculaPrecoDoeLanche(null);
+		
 	}
 
 
