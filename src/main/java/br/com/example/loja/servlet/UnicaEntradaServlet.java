@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.example.loja.controller.ListarCardapio;
+import br.com.example.loja.controller.PedirLancheForm;
 
 @WebServlet("/entrada")
 public class UnicaEntradaServlet extends HttpServlet {
@@ -17,13 +18,18 @@ public class UnicaEntradaServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String paramAction = request.getParameter("action");
+		String paramAction = request.getParameter("acao");
 		
-		if(paramAction.equals("listaCardapio")) {
-			
+		if(paramAction.equals("listarCardapio")) {			
 			ListarCardapio listarCardapio = new ListarCardapio();
 			listarCardapio.execute(request, response);
 		}
+		else if(paramAction.equals("pedirLancheForm")) {
+			PedirLancheForm pedirLanche = new PedirLancheForm();
+			pedirLanche.execute(request, response);
+		}
+		
+		
 		
 		
 	}
