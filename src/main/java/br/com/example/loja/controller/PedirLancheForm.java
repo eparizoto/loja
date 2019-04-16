@@ -12,21 +12,22 @@ import br.com.example.loja.modelo.Banco;
 import br.com.example.loja.modelo.Ingrediente;
 import br.com.example.loja.modelo.Lanche;
 
-public class ListarCardapio {
+public class PedirLancheForm {
 
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("listarCardapio");
-		
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+		System.out.println("pedirLancheForm");
+
 		Banco bd = Banco.getInstance();
-		
+
 		List<Lanche> listaLanches = Banco.getLanchesCardapio();
 		List<Ingrediente> listaIngredientes = Banco.getIngredientesCardapio();
-		
+
 		request.setAttribute("lanches", listaLanches);
 		request.setAttribute("ingredientes", listaIngredientes);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/view/listaCardapio.jsp");
-		rd.forward(request, response);			
+
+		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/view/PedidoLancheForm.jsp");
+		rd.forward(request, response);
 	}
 
 }

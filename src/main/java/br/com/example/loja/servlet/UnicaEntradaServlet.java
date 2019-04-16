@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.example.loja.controller.ListarCardapio;
+import br.com.example.loja.controller.PedirLanche;
 import br.com.example.loja.controller.PedirLancheForm;
 
 @WebServlet("/entrada")
@@ -25,7 +26,11 @@ public class UnicaEntradaServlet extends HttpServlet {
 			listarCardapio.execute(request, response);
 		}
 		else if(paramAction.equals("pedirLancheForm")) {
-			PedirLancheForm pedirLanche = new PedirLancheForm();
+			PedirLancheForm pedirLancheForm = new PedirLancheForm();
+			pedirLancheForm.execute(request, response);
+		}
+		else if(paramAction.equals("pedirLanche")) {
+			PedirLanche pedirLanche = new PedirLanche();
 			pedirLanche.execute(request, response);
 		}
 		

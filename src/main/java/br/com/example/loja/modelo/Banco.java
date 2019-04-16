@@ -7,16 +7,9 @@ public class Banco {
 	
 	private static List<Lanche> lanchesCardapio = new ArrayList<Lanche>();	
 	private static List<Ingrediente> ingredientesCardapio = new ArrayList<Ingrediente>();
+	private static List<Lanche> lanchesPedidos = new ArrayList<Lanche>();
 	private static Banco instance = null;
-	
-	public static Banco getInstance() {
-		
-		if (instance != null)
-			return instance;
-		
-		instance = new Banco();
-		return instance;		
-	}
+	private static int lanchePedidoId = 0;
 	
 	public Banco() {
 		
@@ -58,15 +51,24 @@ public class Banco {
 		
 	}
 
-	public List<Ingrediente> getIngredientesCardapio(){
+	public static Banco getInstance() {
+		
+		if (instance != null)
+			return instance;
+		
+		instance = new Banco();
+		return instance;		
+	}
+	
+	public static List<Ingrediente> getIngredientesCardapio(){
 		return Banco.ingredientesCardapio;
 	}
 	
-	public List<Lanche> getLanchesCardapio(){
+	public static List<Lanche> getLanchesCardapio(){
 		return Banco.lanchesCardapio;		
 	}
 	
-	public static Ingrediente getIngrediente(ItemCardapio ingrediente) {
+	public static Ingrediente getIngredienteCardapio(ItemCardapio ingrediente) {
 		
 		try {
 					
@@ -77,9 +79,8 @@ public class Banco {
 		}
 		
 	}
-	
-	
-	public static Lanche getLanche(ItemCardapio lanche) {
+		
+	public static Lanche getLancheCardapio(ItemCardapio lanche) {
 		
 		try {
 			
@@ -91,4 +92,11 @@ public class Banco {
 		
 	}
 
+	public static Lanche saveLanchePedido(Lanche lanche) {
+		Banco.lanchePedidoId++;
+		lanche.setId(Banco.lanchePedidoId);
+		Banco.lanchesPedidos.add(lanche);
+		
+		return lanche;		
+	}
 }

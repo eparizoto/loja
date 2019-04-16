@@ -90,7 +90,7 @@ public class Lanche {
 				
 				long totalCarne = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.HAMBURGUER_CARNE.toString())).count();
 				long carneFree = totalCarne/3;
-				this.valor = valor - (carneFree * Banco.getIngrediente(ItemCardapio.HAMBURGUER_CARNE).getValor());
+				this.valor = valor - (carneFree * Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE).getValor());
 				
 				break;
 				
@@ -98,7 +98,7 @@ public class Lanche {
 				
 				long totalQueijo = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.QUEIJO.toString())).count();
 				long queijoFree = totalQueijo/3;
-				this.valor = valor - (queijoFree * Banco.getIngrediente(ItemCardapio.QUEIJO).getValor());
+				this.valor = valor - (queijoFree * Banco.getIngredienteCardapio(ItemCardapio.QUEIJO).getValor());
 				
 				break;
 		}
@@ -110,13 +110,11 @@ public class Lanche {
 		calculaPrecoDoeLanche(promocao);		
 	}
 
-	public void add(Ingrediente ingrediente) {
-		
+	public void addIngredienteNoLanche(Ingrediente ingrediente) {		
 		this.getIngredientes().add(ingrediente);
-		this.calculaPrecoDoeLanche(null);
-		
+		this.calculaPrecoDoeLanche(null);		
 	}
 
-
+	
 
 }

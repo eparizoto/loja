@@ -22,7 +22,7 @@ public class ClassesTest {
 
 		Banco.getInstance();
 
-		Lanche xBacon = Banco.getLanche(ItemCardapio.XBACON);
+		Lanche xBacon = Banco.getLancheCardapio(ItemCardapio.XBACON);
 
 		double valorXBacon = xBacon.getValor();
 		double valorIngredientesXBacon = 0.00;
@@ -45,13 +45,13 @@ public class ClassesTest {
 
 		Banco.getInstance();
 
-		Lanche xBacon = Banco.getLanche(ItemCardapio.XBACON);
+		Lanche xBacon = Banco.getLancheCardapio(ItemCardapio.XBACON);
 		
 		int totalDeCarneDoLanche = 21;
 		
 		for(int i = 1; i < totalDeCarneDoLanche; i++) {
 			
-			xBacon.add(Banco.getIngrediente(ItemCardapio.HAMBURGUER_CARNE));
+			xBacon.addIngredienteNoLanche(Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE));
 			
 		}
 
@@ -60,7 +60,7 @@ public class ClassesTest {
 		xBacon.setPromocao(Promocao.MUITA_CARNE);
 		double valorXBaconNaPromocao = xBacon.getValor();
 		double valorXBaconNaPromocaoCalculado = valorXBaconSemPromocao - 
-				totalDeCarneDoLanche /3 *(Banco.getIngrediente(ItemCardapio.HAMBURGUER_CARNE).getValor());
+				totalDeCarneDoLanche /3 *(Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE).getValor());
 		
 		if (valorXBaconNaPromocao == valorXBaconNaPromocaoCalculado)
 			assertTrue(true);
