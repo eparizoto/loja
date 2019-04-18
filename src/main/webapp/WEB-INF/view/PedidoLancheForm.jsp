@@ -19,17 +19,24 @@
 
 	<form action="${linkEntradaServlet }" method="post">
 		<c:forEach items="${lanches}" var="lanche">
-			<input type="radio" name="lanche" value=${ lanche.nome }> ${ lanche.nome }<br>
+			<input type="radio" name="lanche" value=${ lanche.nome }> ${ lanche.nome } - R$ ${ lanche.valor }<br>
 		</c:forEach>
 
 		<br /> Se desejar, escolha os ingredientes adicionais do lanche: <br />
 
 		<c:forEach items="${ingredientes}" var="ingrediente">
-			<br><input type="number" name=${ ingrediente.id } min="0" max="5" value = "0"> ${ ingrediente.nome }<br>
+			<br><input type="number" name="${ ingrediente.nome }" min="0" max="5" value = "0"> ${ ingrediente.nome } - R$ ${ ingrediente.valor }<br>			
 		</c:forEach>
 
-		<br /> <input type="submit" value="Pedir Lanche"> <input
-			type="hidden" name="acao" value=pedirLanche> <br />
+		<br /> 
+		
+		Colocar promoção no lanche: 
+		<input type="radio" name="promocao" value="0"> Light
+		<input type="radio" name="promocao" value="1"> Muita Carne 
+		<input type="radio" name="promocao" value="2"> Muito Queijo<br />		
+		<p><input type="submit" value="Pedir Lanche"></p>
+		<input type="hidden" name="acao" value=pedirLanche> 
+		<br />
 	</form>
 
 </body>

@@ -1,26 +1,51 @@
 package br.com.example.loja.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.example.loja.modelo.Banco;
+import br.com.example.loja.modelo.Ingrediente;
 import br.com.example.loja.modelo.ItemCardapio;
+import br.com.example.loja.modelo.Lanche;
+import br.com.example.loja.modelo.Promocao;
 
 public class PedirLanche {
 
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		System.out.println("pedirLanche");
 		
-		String lanchePedido = request.getParameter("lanche");
-		System.out.println(lanchePedido);
+		String slanchePedido = request.getParameter("lanche");
 		
-		for (int i = 0; i < ItemCardapio.values().length; i++) {
+		if(slanchePedido == null)
+			throw new IOException("Escolha um lanche !!!!!");
 			
-			System.out.println(request.getParameter(String.valueOf(i)));		
+		Lanche lanchePedido = new Lanche(slanchePedido, new ArrayList<Ingrediente>());
+		
+		for (ItemCardapio itemCardapio : ItemCardapio.values()) { 
+			
+			String stringQtdDoIngrediente = request.getParameter(itemCardapio.toString());
+			
+			if(stringQtdDoIngrediente == null)
+				continue;
+			
+			int qtIngrediente = Integer.parseInt(stringQtdDoIngrediente);
+			
+			for (int i = 0; i < qtIngrediente; i++)
+				lanchePedido.addIngredienteNoLanche(Banco.getIngredienteCardapio(itemCardapio));
 		}
 		
-
+		String sPromocao = request.getParameter("promocao");
 		
+		switch (sPromocao) {
+			case "0": lanchePedido.setPromocao(Promocao.LIGHT);			break;
+			case "1": lanchePedido.setPromocao(Promocao.MUITA_CARNE);	break;
+			case "2": lanchePedido.setPromocao(Promocao.MUITO_QUEIJO);	break;
+		}
+		
+		System.out.println(lanchePedido.toString());	
 	}
 
 }

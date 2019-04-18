@@ -2,6 +2,9 @@ package br.com.example.loja.modelo;
 
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Lanche {
 	
 	private static int lastId = 0;
@@ -18,7 +21,7 @@ public class Lanche {
 		this.ingredientes = ingredientesLanche;
 		this.promocao = null;
 		this.valor = 0.00;
-		calculaPrecoDoeLanche(this.promocao);				
+		calculaPrecoDoLanche(this.promocao);				
 	}
 	
 	public Lanche(String nomeLanche, List<Ingrediente> ingredientesLanche, Promocao promocao) {
@@ -28,7 +31,7 @@ public class Lanche {
 		this.promocao = promocao;	
 		this.ingredientes = ingredientesLanche;
 		this.valor = 0.00;
-		calculaPrecoDoeLanche(this.promocao);
+		calculaPrecoDoLanche(this.promocao);
 	}
 	
 
@@ -64,7 +67,7 @@ public class Lanche {
 		this.ingredientes = ingredientes;
 	}
 
-	private double calculaPrecoDoeLanche(Promocao promocao) {
+	private double calculaPrecoDoLanche(Promocao promocao) {
 		
 		this.valor = 0.00;
 		
@@ -74,10 +77,11 @@ public class Lanche {
 		if(promocao == null)
 			return 0.00;
 		
+		this.promocao = promocao;
+		
 		switch (promocao)
 		{
 			case LIGHT:
-				
 				boolean temAlface = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.ALFACE.toString())).findFirst().isPresent();
 				boolean temBacon = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.BACON.toString())).findFirst().isPresent();
 				
@@ -87,7 +91,6 @@ public class Lanche {
 				break;
 				
 			case MUITA_CARNE:
-				
 				long totalCarne = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.HAMBURGUER_CARNE.toString())).count();
 				long carneFree = totalCarne/3;
 				this.valor = valor - (carneFree * Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE).getValor());
@@ -95,7 +98,6 @@ public class Lanche {
 				break;
 				
 			case MUITO_QUEIJO:
-				
 				long totalQueijo = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.QUEIJO.toString())).count();
 				long queijoFree = totalQueijo/3;
 				this.valor = valor - (queijoFree * Banco.getIngredienteCardapio(ItemCardapio.QUEIJO).getValor());
@@ -107,12 +109,20 @@ public class Lanche {
 	}
 	
 	public void setPromocao(Promocao promocao) {
-		calculaPrecoDoeLanche(promocao);		
+		calculaPrecoDoLanche(promocao);		
 	}
+
 
 	public void addIngredienteNoLanche(Ingrediente ingrediente) {		
 		this.getIngredientes().add(ingrediente);
-		this.calculaPrecoDoeLanche(null);		
+		this.calculaPrecoDoLanche(null);		
+	}
+	
+	@Override
+	public String toString() {
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		return gson.toJson(this);
 	}
 
 	
