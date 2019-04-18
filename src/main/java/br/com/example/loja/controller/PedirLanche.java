@@ -2,6 +2,9 @@ package br.com.example.loja.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,7 +16,7 @@ import br.com.example.loja.modelo.Promocao;
 
 public class PedirLanche {
 
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		System.out.println("pedirLanche");
 		
@@ -44,6 +47,10 @@ public class PedirLanche {
 			case "1": lanchePedido.setPromocao(Promocao.MUITA_CARNE);	break;
 			case "2": lanchePedido.setPromocao(Promocao.MUITO_QUEIJO);	break;
 		}
+						
+		request.setAttribute("lanchePedido", Banco.saveLanchePedido(lanchePedido));
+		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/view/pedidoEfetuado.jsp");
+		rd.forward(request, response);
 		
 		System.out.println(lanchePedido.toString());	
 	}
