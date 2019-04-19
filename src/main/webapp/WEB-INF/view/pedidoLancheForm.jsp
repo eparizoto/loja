@@ -33,8 +33,9 @@
 		Colocar promoção no lanche: 
 		<input type="radio" name="promocao" value="0"> Light
 		<input type="radio" name="promocao" value="1"> Muita Carne 
-		<input type="radio" name="promocao" value="2"> Muito Queijo<br />		
-		<p><input type="submit" value="Pedir Lanche"></p>
+		<input type="radio" name="promocao" value="2"> Muito Queijo<br />
+		<br />		
+		 <li><input type="submit" value="Pedir Lanche">&nbsp<a href="/loja/entrada?acao=MostrarPedidos">Exibir pedidos</a></li>
 		<input type="hidden" name="acao" value=PedirLanche> 
 		<br />
 	</form>

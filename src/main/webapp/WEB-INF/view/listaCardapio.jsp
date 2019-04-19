@@ -54,7 +54,10 @@
 	</table>
 
 	<br />
-	<li><a href="/loja/entrada?acao=PedirLancheForm">PEDIR UM LANCHE</a></li>
+	<li>
+		<a href="/loja/entrada?acao=PedirLancheForm">Pedir um lanche</a>&nbsp
+		<a href="/loja/entrada?acao=MostrarPedidos">Exibir pedidos</a>
+	</li>
 
 </body>
 

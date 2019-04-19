@@ -16,7 +16,7 @@
 
 	<h2>Lanches:</h2>
 
-	<table style="width: 45%">
+	<table style="width: 70%">
 		<tr>
 			<th>Lanche</th>
 			<th>Ingredientes</th>
