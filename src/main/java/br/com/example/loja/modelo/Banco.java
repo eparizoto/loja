@@ -9,46 +9,54 @@ public class Banco {
 	private static List<Ingrediente> ingredientesCardapio = new ArrayList<Ingrediente>();
 	private static List<Lanche> lanchesPedidos = new ArrayList<Lanche>();
 	private static Banco instance = null;
-	private static int lanchePedidoId = 0;
+	private static int lastLanchePedidoId = 0;
+	private static int lastLancheCardapioId = 0;
+	private static int lastIngredienteCardapioId = 0;
 	
-	public Banco() {
+	static {
 		
-		Ingrediente alface = new Ingrediente(ItemCardapio.ALFACE.toString(), 0.40);
-		Ingrediente bacon = new Ingrediente(ItemCardapio.BACON.toString(), 2.00);
-		Ingrediente hambCarne = new Ingrediente(ItemCardapio.HAMBURGUER_CARNE.toString(), 3.00);
-		Ingrediente ovo = new Ingrediente(ItemCardapio.OVO.toString(), 0.80);
-		Ingrediente queijo = new Ingrediente(ItemCardapio.QUEIJO.toString(), 1.50);
-		
-		Banco.ingredientesCardapio.add(alface);
-		Banco.ingredientesCardapio.add(bacon);
-		Banco.ingredientesCardapio.add(hambCarne);
-		Banco.ingredientesCardapio.add(ovo);
-		Banco.ingredientesCardapio.add(queijo);
+		Banco.addNewIngredienteAoCardapio(new Ingrediente(ItemCardapio.ALFACE.toString(), 0.40));
+		Banco.addNewIngredienteAoCardapio(new Ingrediente(ItemCardapio.BACON.toString(), 2.00));
+		Banco.addNewIngredienteAoCardapio(new Ingrediente(ItemCardapio.HAMBURGUER_CARNE.toString(), 3.00));
+		Banco.addNewIngredienteAoCardapio(new Ingrediente(ItemCardapio.OVO.toString(), 0.80));
+		Banco.addNewIngredienteAoCardapio(new Ingrediente(ItemCardapio.QUEIJO.toString(), 1.50));
 		
 		List<Ingrediente> ingredientesXBacon = new ArrayList<Ingrediente>();
-		ingredientesXBacon.add(bacon);
-		ingredientesXBacon.add(hambCarne);
-		ingredientesXBacon.add(queijo);		
-		Banco.lanchesCardapio.add(new Lanche(ItemCardapio.XBACON.toString(), ingredientesXBacon));
+		ingredientesXBacon.add(Banco.getIngredienteCardapio(ItemCardapio.BACON));
+		ingredientesXBacon.add(Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE));
+		ingredientesXBacon.add(Banco.getIngredienteCardapio(ItemCardapio.QUEIJO));
+		Banco.addNewLancheAoCardapio(new Lanche(ItemCardapio.XBACON.toString(), ingredientesXBacon));
 		
 		List<Ingrediente> ingredientesXBurger = new ArrayList<Ingrediente>();
-		ingredientesXBurger.add(hambCarne);
-		ingredientesXBurger.add(queijo);		
-		Banco.lanchesCardapio.add(new Lanche(ItemCardapio.XBURGER.toString(), ingredientesXBurger));
+		ingredientesXBurger.add(Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE));
+		ingredientesXBurger.add(Banco.getIngredienteCardapio(ItemCardapio.QUEIJO));		
+		Banco.addNewLancheAoCardapio(new Lanche(ItemCardapio.XBURGER.toString(), ingredientesXBurger));
 		
 		List<Ingrediente> ingredientesXEgg = new ArrayList<Ingrediente>();
-		ingredientesXEgg.add(ovo);
-		ingredientesXEgg.add(hambCarne);
-		ingredientesXEgg.add(queijo);		
-		Banco.lanchesCardapio.add(new Lanche(ItemCardapio.XEGG.toString(), ingredientesXEgg));
+		ingredientesXEgg.add(Banco.getIngredienteCardapio(ItemCardapio.OVO));
+		ingredientesXEgg.add(Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE));
+		ingredientesXEgg.add(Banco.getIngredienteCardapio(ItemCardapio.QUEIJO));		
+		Banco.addNewLancheAoCardapio(new Lanche(ItemCardapio.XEGG.toString(), ingredientesXEgg));
 		
 		List<Ingrediente> ingredientesXEggBacon = new ArrayList<Ingrediente>();
-		ingredientesXEggBacon.add(ovo);
-		ingredientesXEggBacon.add(bacon);
-		ingredientesXEggBacon.add(hambCarne);
-		ingredientesXEggBacon.add(queijo);		
-		Banco.lanchesCardapio.add(new Lanche(ItemCardapio.XEGG_BACON.toString(), ingredientesXEggBacon));
+		ingredientesXEggBacon.add(Banco.getIngredienteCardapio(ItemCardapio.OVO));
+		ingredientesXEggBacon.add(Banco.getIngredienteCardapio(ItemCardapio.BACON));
+		ingredientesXEggBacon.add(Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE));
+		ingredientesXEggBacon.add(Banco.getIngredienteCardapio(ItemCardapio.QUEIJO));		
+		Banco.addNewLancheAoCardapio(new Lanche(ItemCardapio.XEGG_BACON.toString(), ingredientesXEggBacon));
 		
+	}
+
+	public static Lanche addNewLancheAoCardapio(Lanche lanche) {
+		lanche.setId(++Banco.lastLancheCardapioId);
+		Banco.lanchesCardapio.add(lanche);
+		return lanche;
+	}
+	
+	public static Ingrediente addNewIngredienteAoCardapio(Ingrediente ingrediente) {
+		ingrediente.setId(++Banco.lastIngredienteCardapioId);
+		Banco.ingredientesCardapio.add(ingrediente);
+		return ingrediente;
 	}
 
 	public static Banco getInstance() {
@@ -71,9 +79,9 @@ public class Banco {
 	public static Ingrediente getIngredienteCardapio(ItemCardapio ingrediente) {
 		
 		try {
-					
-			return ingredientesCardapio.stream().filter(i->i.getNome().equals(ingrediente.toString())).findFirst().get();
 			
+			return ingredientesCardapio.stream().filter(i->i.getNome().equals(ingrediente.toString())).findFirst().get(); 
+						
 		} catch (Exception e) {
 			return null;
 		}
@@ -84,8 +92,8 @@ public class Banco {
 		
 		try {
 			
-			return lanchesCardapio.stream().filter(i->i.getNome().equals(lanche.toString())).findFirst().get();
-			
+			return lanchesCardapio.stream().filter(i->i.getNome().equals(lanche.toString())).findFirst().get();		
+						
 		} catch (Exception e) {
 			return null;
 		}
@@ -93,10 +101,15 @@ public class Banco {
 	}
 
 	public static Lanche saveLanchePedido(Lanche lanche) {
-		Banco.lanchePedidoId++;
-		lanche.setId(Banco.lanchePedidoId);
+		Banco.lastLanchePedidoId++;
+		lanche.setId(Banco.lastLanchePedidoId);
 		Banco.lanchesPedidos.add(lanche);
 		
 		return lanche;		
+	}
+
+	public static List<Lanche> getLanchesPedidos() {
+		
+		return Banco.lanchesPedidos;
 	}
 }

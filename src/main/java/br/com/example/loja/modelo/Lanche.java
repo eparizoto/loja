@@ -1,5 +1,7 @@
 package br.com.example.loja.modelo;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -7,30 +9,26 @@ import com.google.gson.GsonBuilder;
 
 public class Lanche {
 	
-	private static int lastId = 0;
 	private int id;
 	private String nome;
-	private double valor;
+	private BigDecimal valor;
 	private List<Ingrediente> ingredientes;
 	private Promocao promocao;
 	
 	public Lanche(String nomeLanche, List<Ingrediente> ingredientesLanche) {
-		Lanche.lastId++;
-		this.id = lastId;
 		this.nome = nomeLanche;
 		this.ingredientes = ingredientesLanche;
 		this.promocao = null;
-		this.valor = 0.00;
+		this.valor = new BigDecimal(0.00);
 		calculaPrecoDoLanche(this.promocao);				
 	}
 	
+	
 	public Lanche(String nomeLanche, List<Ingrediente> ingredientesLanche, Promocao promocao) {
-		Lanche.lastId++;
-		this.id = lastId;
 		this.nome = nomeLanche;
 		this.promocao = promocao;	
 		this.ingredientes = ingredientesLanche;
-		this.valor = 0.00;
+		this.valor = new BigDecimal(0.00);
 		calculaPrecoDoLanche(this.promocao);
 	}
 	
@@ -39,74 +37,83 @@ public class Lanche {
 		return id;
 	}
 
+	
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	
 	public String getNome() {
 		return nome;
 	}
+	
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public double getValor() {
-		return valor;
+	
+	public BigDecimal getValor() {
+		return valor.setScale(2, RoundingMode.DOWN);
 	}
 
+	
 	public void setValor(double valor) {
-		this.valor = valor;
+		this.valor = new BigDecimal(valor);
 	}
 
+	
 	public List<Ingrediente> getIngredientes() {
-		return ingredientes;
+		return this.ingredientes;
 	}
 
+	
 	public void setIngredientes(List<Ingrediente> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
 
-	private double calculaPrecoDoLanche(Promocao promocao) {
+	
+	private BigDecimal calculaPrecoDoLanche(Promocao promocao) {
 		
-		this.valor = 0.00;
+		this.valor = new BigDecimal(0.00);
 		
-		for (Ingrediente ingrediente : ingredientes)
-			this.valor += ingrediente.getValor();
+		for (Ingrediente ingrediente : this.ingredientes)
+			this.valor = this.valor.add(ingrediente.getValor());
 		
 		if(promocao == null)
-			return 0.00;
+			return new BigDecimal(0.00);
 		
 		this.promocao = promocao;
 		
 		switch (promocao)
 		{
 			case LIGHT:
-				boolean temAlface = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.ALFACE.toString())).findFirst().isPresent();
-				boolean temBacon = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.BACON.toString())).findFirst().isPresent();
+				boolean temAlface = this.ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.ALFACE.toString())).findFirst().isPresent();
+				boolean temBacon = this.ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.BACON.toString())).findFirst().isPresent();
 				
 				if(temAlface && !temBacon) 
-					this.valor = valor * 0.90;										
+					this.valor = this.valor.multiply(new BigDecimal(0.90));										
 								
 				break;
 				
 			case MUITA_CARNE:
-				long totalCarne = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.HAMBURGUER_CARNE.toString())).count();
+				long totalCarne = this.ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.HAMBURGUER_CARNE.toString())).count();
 				long carneFree = totalCarne/3;
-				this.valor = valor - (carneFree * Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE).getValor());
+				this.valor = this.valor.subtract(new BigDecimal(carneFree).multiply(Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE).getValor()));
 				
 				break;
 				
 			case MUITO_QUEIJO:
-				long totalQueijo = ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.QUEIJO.toString())).count();
+				long totalQueijo = this.ingredientes.stream().filter(i->i.getNome().equals(ItemCardapio.QUEIJO.toString())).count();
 				long queijoFree = totalQueijo/3;
-				this.valor = valor - (queijoFree * Banco.getIngredienteCardapio(ItemCardapio.QUEIJO).getValor());
+				this.valor = this.valor.subtract((new BigDecimal(queijoFree)).multiply(Banco.getIngredienteCardapio(ItemCardapio.QUEIJO).getValor()));
 				
 				break;
 		}
 		
 		return this.valor;			
 	}
+	
 	
 	public void setPromocao(Promocao promocao) {
 		calculaPrecoDoLanche(promocao);		
@@ -118,6 +125,7 @@ public class Lanche {
 		this.calculaPrecoDoLanche(null);		
 	}
 	
+	
 	@Override
 	public String toString() {
 		
@@ -125,6 +133,7 @@ public class Lanche {
 		return gson.toJson(this);
 	}
 
+	
 	
 
 }

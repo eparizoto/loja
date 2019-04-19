@@ -4,16 +4,15 @@
 <%@ page import="java.util.List,br.com.example.loja.modelo.Lanche"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Cardapio de Ingredientes e Lanches</title>
+<title>Pedidos Feitos</title>
 </head>
 <body style="">
 
-	<h1>Nossa Loja - Cardápio</h1>
+	<h1>Nossa Loja - Pedidos feitos</h1>
 
 	<h2>Lanches:</h2>
 
@@ -24,7 +23,7 @@
 			<th>Preço</th>
 		</tr>
 
-		<c:forEach items="${lanchesCardapio}" var="lanche">
+		<c:forEach items="${lanchesPedidos}" var="lanche">
 			<tr>
 				<td>${lanche.nome }</td>
 				<td><c:forEach items="${lanche.ingredientes }" var="lancheIngrediente">
@@ -35,29 +34,12 @@
 			</tr>
 		</c:forEach>
 	</table>
-
-	<h2>Ingredientes Adicionais:</h2>
-
-	<table style="width: 25%">
-		<tr>
-			<th>Ingrediente Adicional</th>
-			<th>Preço</th>
-		</tr>
-
-		<c:forEach items="${ingredientesCardapio}" var="ingrediente">
-			<tr>
-				<td>${ingrediente.nome }</td>
-				<td>${ingrediente.valor }</td>
-			</tr>
-		</c:forEach>
-
-	</table>
-
-	<br />
-	<li><a href="/loja/entrada?acao=PedirLancheForm">PEDIR UM LANCHE</a></li>
-
+	
+	<br />	
+	<a href="/loja/entrada?acao=ListarCardapio">Listar Cardapio</a>&nbsp
+	<a href="/loja/entrada?acao=PedirLancheForm">Pedir Lanche</a>
+	
 </body>
-
 <style>
 table, th, td {
 	border: 1px solid black;
@@ -69,5 +51,3 @@ table, th, td {
 }
 </style>
 </html>
-
-

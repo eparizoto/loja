@@ -5,6 +5,7 @@ package br.com.example.loja.tests;
 
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Test;
@@ -24,17 +25,17 @@ public class ClassesTest {
 
 		Lanche xBacon = Banco.getLancheCardapio(ItemCardapio.XBACON);
 
-		double valorXBacon = xBacon.getValor();
-		double valorIngredientesXBacon = 0.00;
+		BigDecimal valorXBacon = xBacon.getValor();
+		BigDecimal valorIngredientesXBacon = new BigDecimal(0.00);
 
 		List<Ingrediente> lst = xBacon.getIngredientes();
 
 		for (Ingrediente ingrediente : lst) {
 
-			valorIngredientesXBacon += ingrediente.getValor();
+			valorIngredientesXBacon = valorIngredientesXBacon.add(ingrediente.getValor());
 		}
 
-		if (valorIngredientesXBacon == valorXBacon)
+		if (valorIngredientesXBacon.equals(valorXBacon))
 			assertTrue(true);
 		else
 			assertTrue(false);
@@ -49,20 +50,17 @@ public class ClassesTest {
 		
 		int totalDeCarneDoLanche = 21;
 		
-		for(int i = 1; i < totalDeCarneDoLanche; i++) {
-			
+		for(int i = 1; i < totalDeCarneDoLanche; i++) 			
 			xBacon.addIngredienteNoLanche(Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE));
 			
-		}
-
-		double valorXBaconSemPromocao = xBacon.getValor();
+		BigDecimal valorXBaconSemPromocao = xBacon.getValor();
 		
 		xBacon.setPromocao(Promocao.MUITA_CARNE);
-		double valorXBaconNaPromocao = xBacon.getValor();
-		double valorXBaconNaPromocaoCalculado = valorXBaconSemPromocao - 
-				totalDeCarneDoLanche /3 *(Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE).getValor());
+		BigDecimal valorXBaconNaPromocao = xBacon.getValor();
+		BigDecimal valorXBaconNaPromocaoCalculado = valorXBaconSemPromocao.subtract(
+				Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE).getValor().multiply(new BigDecimal(totalDeCarneDoLanche /3)));
 		
-		if (valorXBaconNaPromocao == valorXBaconNaPromocaoCalculado)
+		if (valorXBaconNaPromocao.equals(valorXBaconNaPromocaoCalculado))
 			assertTrue(true);
 		else
 			assertTrue(false);

@@ -1,15 +1,15 @@
 package br.com.example.loja.servlet;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.example.loja.controller.ListarCardapio;
-import br.com.example.loja.controller.PedirLanche;
-import br.com.example.loja.controller.PedirLancheForm;
+import br.com.example.loja.controller.IAcao;
 
 @WebServlet("/entrada")
 public class UnicaEntradaServlet extends HttpServlet {
@@ -19,21 +19,27 @@ public class UnicaEntradaServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String paramAction = request.getParameter("acao");
+		String paramAction = request.getParameter("acao");		
+		String nomeDaClasse = "br.com.example.loja.controller." + paramAction;
+		String nome;
 		
-		if(paramAction.equals("listarCardapio")) {			
-			ListarCardapio listarCardapio = new ListarCardapio();
-			listarCardapio.execute(request, response);
+		try {
+			Class<?> classe  = Class.forName(nomeDaClasse);		
+			IAcao acao = (IAcao) classe.newInstance();
+			nome = acao.execute(request, response);
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			throw new ServletException(e);			
 		}
-		else if(paramAction.equals("pedirLancheForm")) {
-			PedirLancheForm pedirLancheForm = new PedirLancheForm();
-			pedirLancheForm.execute(request, response);
-		}
-		else if(paramAction.equals("pedirLanche")) {
-			PedirLanche pedirLanche = new PedirLanche();
-			pedirLanche.execute(request, response);
-		}
+
+		String[] tipoEEndereco = nome.split(":");
 		
+		if(tipoEEndereco[0].equals("forward")) {
+			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/view/" + tipoEEndereco[1]);
+			rd.forward(request, response);
+		}
+		else {
+			response.sendRedirect(tipoEEndereco[1]);	
+		}
 		
 		
 		

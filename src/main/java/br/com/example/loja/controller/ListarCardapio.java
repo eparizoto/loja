@@ -12,21 +12,18 @@ import br.com.example.loja.modelo.Banco;
 import br.com.example.loja.modelo.Ingrediente;
 import br.com.example.loja.modelo.Lanche;
 
-public class ListarCardapio {
+public class ListarCardapio implements IAcao {
 
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("listarCardapio");
-		
-		Banco bd = Banco.getInstance();
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("ListarCardapio");
 		
 		List<Lanche> listaLanches = Banco.getLanchesCardapio();
 		List<Ingrediente> listaIngredientes = Banco.getIngredientesCardapio();
 		
-		request.setAttribute("lanches", listaLanches);
-		request.setAttribute("ingredientes", listaIngredientes);
+		request.setAttribute("lanchesCardapio", listaLanches);
+		request.setAttribute("ingredientesCardapio", listaIngredientes);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/view/listaCardapio.jsp");
-		rd.forward(request, response);			
+		return "forward:listaCardapio.jsp";		
 	}
 
 }

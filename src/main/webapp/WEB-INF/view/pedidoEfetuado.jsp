@@ -15,7 +15,7 @@
 
 	<h1>Nossa Loja - Pedido de Lanche</h1>
 
-	<br /> Lanche: ${lanchePedido.nome}
+	<br /> Lanche pedido: ${lanchePedido.nome} Total: ${lanchePedido.valor} <br />
 
 	<br /> Ingredientes Adicionais:
 
@@ -26,7 +26,7 @@
 	</ul>
 
 	<br />
-	<li><a href="/loja/entrada?acao=listarCardapio">CARDÁPIO</a></li>
+	<li><a href="/loja/entrada?acao=ListarCardapio">CARDÁPIO</a></li>
 
 
 </body>

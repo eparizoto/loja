@@ -1,17 +1,17 @@
 package br.com.example.loja.modelo;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Ingrediente {
 	
-	private static int lastId = 0;
 	private int id;
 	private String nome;
-	private double valor;
+	private BigDecimal valor;
 	
 	public Ingrediente(String nomeIngrediente, double valorIngrediente) {
-		Ingrediente.lastId++;
-		this.id = lastId;
 		this.nome = nomeIngrediente;
-		this.valor = valorIngrediente;
+		this.valor = new BigDecimal(valorIngrediente);
 	}
 
 	public int getId() {
@@ -31,12 +31,14 @@ public class Ingrediente {
 	}
 	
 	
-	public double getValor() {
-		return valor;
+	public BigDecimal getValor() {
+		return valor.setScale(2, RoundingMode.DOWN);
 	}
 
 	public void setValor(double valor) {
-		this.valor = valor;
+		this.valor = new BigDecimal(valor);
 	}
 
+		
+	
 }

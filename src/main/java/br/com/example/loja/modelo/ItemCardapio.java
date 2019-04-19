@@ -1,20 +1,19 @@
 package br.com.example.loja.modelo;
 
 public enum ItemCardapio {
-	ALFACE("Alface"),
-	BACON("Bacon"),
-	HAMBURGUER_CARNE("Hamburguer de Carne"),
-	OVO("Ovo"),
+	ALFACE("Alface"), 
+	BACON("Bacon"), 
+	HAMBURGUER_CARNE("Hamburguer de Carne"), 
+	OVO("Ovo"), 
 	QUEIJO("Queijo"),
-	XBACON("X-Bacon"),
-	XBURGER("X-Burger"),
-	XEGG("X-Egg"),
-	XEGG_BACON("X-EggBacon")
-	;
-		
+	XBACON("X-Bacon"), 
+	XBURGER("X-Burger"), 
+	XEGG("X-Egg"), 
+	XEGG_BACON("X-EggBacon");
+
 	private final String text;
-	
-	ItemCardapio(final String text){
+
+	ItemCardapio(final String text) {
 		this.text = text;
 	}
 
@@ -22,5 +21,14 @@ public enum ItemCardapio {
 	public String toString() {
 		return text;
 	}
-	
+
+	public static ItemCardapio fromString(String text) {
+		for (ItemCardapio item : ItemCardapio.values()) {
+			if (item.text.equalsIgnoreCase(text)) {
+				return item;
+			}
+		}
+
+		return null;
+	}
 }
