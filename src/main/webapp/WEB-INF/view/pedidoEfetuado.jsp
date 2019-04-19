@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.List,br.com.example.loja.modelo.Ingrediente"%>
 <%@ page import="java.util.List,br.com.example.loja.modelo.Lanche"%>
@@ -15,8 +16,8 @@
 	<h1>Nossa Loja - Pedido de Lanche</h1>
 
 	<br /> Lanche: ${lanchePedido.nome}
-	
-	<br /> Ingredientes do lanche:
+
+	<br /> Ingredientes Adicionais:
 
 	<ul>
 		<c:forEach items="${lanchePedido.ingredientes}" var="ingrediente">
@@ -29,4 +30,15 @@
 
 
 </body>
+
+<style>
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+* {
+	font-family: verdana;
+}
+</style>
 </html>

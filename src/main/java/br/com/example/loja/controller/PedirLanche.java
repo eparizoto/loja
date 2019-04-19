@@ -42,10 +42,13 @@ public class PedirLanche {
 		
 		String sPromocao = request.getParameter("promocao");
 		
-		switch (sPromocao) {
-			case "0": lanchePedido.setPromocao(Promocao.LIGHT);			break;
-			case "1": lanchePedido.setPromocao(Promocao.MUITA_CARNE);	break;
-			case "2": lanchePedido.setPromocao(Promocao.MUITO_QUEIJO);	break;
+		if (sPromocao != null)
+		{
+			switch (sPromocao) {
+				case "0": lanchePedido.setPromocao(Promocao.LIGHT);			break;
+				case "1": lanchePedido.setPromocao(Promocao.MUITA_CARNE);	break;
+				case "2": lanchePedido.setPromocao(Promocao.MUITO_QUEIJO);	break;
+			}
 		}
 						
 		request.setAttribute("lanchePedido", Banco.saveLanchePedido(lanchePedido));

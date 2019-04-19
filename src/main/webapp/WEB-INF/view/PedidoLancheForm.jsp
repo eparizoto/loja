@@ -40,4 +40,15 @@
 	</form>
 
 </body>
+
+<style>
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+* {
+	font-family: verdana;
+}
+</style>
 </html>
