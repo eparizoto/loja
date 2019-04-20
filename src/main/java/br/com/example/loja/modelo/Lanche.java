@@ -81,7 +81,7 @@ public class Lanche {
 			this.valor = this.valor.add(ingrediente.getValor());
 		
 		if(promocao == null)
-			return new BigDecimal(0.00);
+			return this.valor;
 		
 		this.promocao = promocao;
 		
@@ -118,7 +118,10 @@ public class Lanche {
 	public void setPromocao(Promocao promocao) {
 		calculaPrecoDoLanche(promocao);		
 	}
-
+	
+	public Promocao getPromocao() {
+		return this.promocao;
+	}
 
 	public void addIngredienteNoLanche(Ingrediente ingrediente) {		
 		this.getIngredientes().add(ingrediente);

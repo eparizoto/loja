@@ -4,6 +4,7 @@
 <%@ page import="java.util.List,br.com.example.loja.modelo.Lanche"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:url value="/entrada" var="linkEntradaServlet" />
 
 <!DOCTYPE html>
 <html>
@@ -13,7 +14,7 @@
 </head>
 <body style="">
 
-	<h1>Nossa Loja - Cardápio</h1>
+	<h1>Nossa Loja - Editar Cardápio</h1>
 
 	<h2>Lanches:</h2>
 
@@ -35,29 +36,27 @@
 			</tr>
 		</c:forEach>
 	</table>
-
-	<h2>Ingredientes Adicionais:</h2>
-
-	<table style="width: 25%">
-		<tr>
-			<th>Ingrediente Adicional</th>
-			<th>Preço</th>
-		</tr>
-
-		<c:forEach items="${ingredientesCardapio}" var="ingrediente">
+	<form action="${linkEntradaServlet }" method="post">
+		<h2>Editar Ingredientes Adicionais:</h2>
+	
+		<table style="width: 30%">
 			<tr>
-				<td>${ingrediente.nome }</td>
-				<td>R$ ${ingrediente.valor }</td>
+				<th>Ingrediente Adicional</th>
+				<th>Preço R$</th>
 			</tr>
-		</c:forEach>
-
-	</table>
-
-	<br />
-	<a href="/loja/entrada?acao=PedirLancheForm">Pedir um lanche</a>&nbsp
-	<a href="/loja/entrada?acao=MostrarPedidos">Exibir pedidos</a>&nbsp
-	<a href="/loja/entrada?acao=EditarCardapioForm">Editar Cardápio</a>	
-
+	
+			<c:forEach items="${ingredientesCardapio}" var="ingrediente">
+				<tr>
+					<td>${ingrediente.nome }</td>
+					<td><input type="number" name="${ingrediente.nome }" min="0.01" step="0.01" value= "${ingrediente.valor }"></td>
+				</tr>
+			</c:forEach>
+		</table>
+	
+		<br />
+		<input type="submit" value="Salvar alterações">&nbsp<a href="/loja/entrada?acao=ListarCardapio">Listar Cardápio</a>
+		<input type="hidden" name="acao" value=SalvarCardapio>
+	</form> 
 </body>
 
 <style>

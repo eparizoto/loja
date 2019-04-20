@@ -112,4 +112,15 @@ public class Banco {
 		
 		return Banco.lanchesPedidos;
 	}
+
+	public static void updateValorIngrediente(ItemCardapio itemCardapio, double paramValue) {
+
+		Banco.getIngredienteCardapio(itemCardapio).setValor(paramValue);
+		
+		List<Lanche>lanchesCardapio = Banco.getLanchesCardapio();
+		
+		for (Lanche lanche : lanchesCardapio) 
+			lanche.setPromocao(null);
+		
+	}
 }

@@ -21,6 +21,7 @@
 			<th>Lanche</th>
 			<th>Ingredientes</th>
 			<th>Preço</th>
+			<th>Promoção</th>
 		</tr>
 
 		<c:forEach items="${lanchesPedidos}" var="lanche">
@@ -30,7 +31,17 @@
 						-&nbsp${lancheIngrediente.nome}
 					</c:forEach>
 				</td>
-				<td>${lanche.valor }</td>
+				<td>R$ ${lanche.valor }</td>
+				<td>
+					<c:choose> 
+					<c:when test="${not empty lanche.promocao }">
+						${lanche.promocao.toString() }
+					</c:when>
+					<c:otherwise>
+						Sem promoção
+					</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>
