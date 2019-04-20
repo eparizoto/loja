@@ -1,6 +1,7 @@
 package br.com.example.loja.servlet;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,9 +26,9 @@ public class UnicaEntradaServlet extends HttpServlet {
 		
 		try {
 			Class<?> classe  = Class.forName(nomeDaClasse);		
-			IAcao acao = (IAcao) classe.newInstance();
+			IAcao acao = (IAcao) classe.getDeclaredConstructor().newInstance();
 			nome = acao.execute(request, response);
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			throw new ServletException(e);			
 		}
 
