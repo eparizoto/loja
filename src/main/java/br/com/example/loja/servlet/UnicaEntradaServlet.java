@@ -39,8 +39,7 @@ public class UnicaEntradaServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 		else {
-			response.sendRedirect(tipoEEndereco[1])
-			
+			response.sendRedirect(tipoEEndereco[1])			
 		}
 		
 		
