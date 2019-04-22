@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Lanche.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">loja Maven Webapp</a> &gt; <a href="index.source.html" class="el_package">br.com.example.loja.modelo</a> &gt; <span class="el_source">Lanche.java</span></div><h1>Lanche.java</h1><pre class="source lang-java linenums">package br.com.example.loja.modelo;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+public class Lanche {
+	
+	private int id;
+	private String nome;
+	private BigDecimal valor;
+	private List&lt;Ingrediente&gt; ingredientes;
+	private Promocao promocao;
+	
+<span class="fc" id="L18">	public Lanche(String nomeLanche, List&lt;Ingrediente&gt; ingredientesLanche) {</span>
+<span class="fc" id="L19">		this.nome = nomeLanche;</span>
+<span class="fc" id="L20">		this.ingredientes = ingredientesLanche;</span>
+<span class="fc" id="L21">		this.promocao = null;</span>
+<span class="fc" id="L22">		this.valor = new BigDecimal(0.00);</span>
+<span class="fc" id="L23">		calculaPrecoDoLanche(this.promocao);				</span>
+<span class="fc" id="L24">	}</span>
+	
+	
+<span class="nc" id="L27">	public Lanche(String nomeLanche, List&lt;Ingrediente&gt; ingredientesLanche, Promocao promocao) {</span>
+<span class="nc" id="L28">		this.nome = nomeLanche;</span>
+<span class="nc" id="L29">		this.promocao = promocao;	</span>
+<span class="nc" id="L30">		this.ingredientes = ingredientesLanche;</span>
+<span class="nc" id="L31">		this.valor = new BigDecimal(0.00);</span>
+<span class="nc" id="L32">		calculaPrecoDoLanche(this.promocao);</span>
+<span class="nc" id="L33">	}</span>
+	
+
+	public int getId() {
+<span class="nc" id="L37">		return id;</span>
+	}
+
+	
+	public void setId(int id) {
+<span class="fc" id="L42">		this.id = id;</span>
+<span class="fc" id="L43">	}</span>
+
+	
+	public String getNome() {
+<span class="fc" id="L47">		return nome;</span>
+	}
+	
+
+	public void setNome(String nome) {
+<span class="nc" id="L52">		this.nome = nome;</span>
+<span class="nc" id="L53">	}</span>
+
+	
+	public BigDecimal getValor() {
+<span class="fc" id="L57">		return valor.setScale(2, RoundingMode.DOWN);</span>
+	}
+
+	
+	public void setValor(double valor) {
+<span class="nc" id="L62">		this.valor = new BigDecimal(valor);</span>
+<span class="nc" id="L63">	}</span>
+
+	
+	public List&lt;Ingrediente&gt; getIngredientes() {
+<span class="fc" id="L67">		return this.ingredientes;</span>
+	}
+
+	
+	public void setIngredientes(List&lt;Ingrediente&gt; ingredientes) {
+<span class="nc" id="L72">		this.ingredientes = ingredientes;</span>
+<span class="nc" id="L73">	}</span>
+
+	
+	private BigDecimal calculaPrecoDoLanche(Promocao promocao) {
+		
+<span class="fc" id="L78">		this.valor = new BigDecimal(0.00);</span>
+		
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		for (Ingrediente ingrediente : this.ingredientes)</span>
+<span class="fc" id="L81">			this.valor = this.valor.add(ingrediente.getValor());</span>
+		
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if(promocao == null)</span>
+<span class="fc" id="L84">			return this.valor;</span>
+		
+<span class="fc" id="L86">		this.promocao = promocao;</span>
+		
+<span class="pc bpc" id="L88" title="1 of 4 branches missed.">		switch (promocao)</span>
+		{
+			case LIGHT:
+<span class="fc" id="L91">				boolean temAlface = this.ingredientes.stream().filter(i-&gt;i.getNome().equals(ItemCardapio.ALFACE.toString())).findFirst().isPresent();</span>
+<span class="fc" id="L92">				boolean temBacon = this.ingredientes.stream().filter(i-&gt;i.getNome().equals(ItemCardapio.BACON.toString())).findFirst().isPresent();</span>
+				
+<span class="pc bpc" id="L94" title="2 of 4 branches missed.">				if(temAlface &amp;&amp; !temBacon) </span>
+<span class="fc" id="L95">					this.valor = this.valor.multiply(new BigDecimal(0.90));										</span>
+								
+<span class="fc" id="L97">				break;</span>
+				
+			case MUITA_CARNE:
+<span class="fc" id="L100">				long totalCarne = this.ingredientes.stream().filter(i-&gt;i.getNome().equals(ItemCardapio.HAMBURGUER_CARNE.toString())).count();</span>
+<span class="fc" id="L101">				long carneFree = totalCarne/3;</span>
+<span class="fc" id="L102">				this.valor = this.valor.subtract(new BigDecimal(carneFree).multiply(Banco.getIngredienteCardapio(ItemCardapio.HAMBURGUER_CARNE).getValor()));</span>
+				
+<span class="fc" id="L104">				break;</span>
+				
+			case MUITO_QUEIJO:
+<span class="fc" id="L107">				long totalQueijo = this.ingredientes.stream().filter(i-&gt;i.getNome().equals(ItemCardapio.QUEIJO.toString())).count();</span>
+<span class="fc" id="L108">				long queijoFree = totalQueijo/3;</span>
+<span class="fc" id="L109">				this.valor = this.valor.subtract((new BigDecimal(queijoFree)).multiply(Banco.getIngredienteCardapio(ItemCardapio.QUEIJO).getValor()));</span>
+				
+				break;
+		}		
+		
+<span class="fc" id="L114">		return this.valor;			</span>
+	}
+	
+	
+	public void setPromocao(Promocao promocao) {
+<span class="fc" id="L119">		calculaPrecoDoLanche(promocao);		</span>
+<span class="fc" id="L120">	}</span>
+	
+	public Promocao getPromocao() {
+<span class="nc" id="L123">		return this.promocao;</span>
+	}
+
+	public void addIngredienteNoLanche(Ingrediente ingrediente) {		
+<span class="fc" id="L127">		this.getIngredientes().add(ingrediente);</span>
+<span class="fc" id="L128">		this.calculaPrecoDoLanche(null);		</span>
+<span class="fc" id="L129">	}</span>
+	
+	
+	@Override
+	public String toString() {
+		
+<span class="nc" id="L135">		Gson gson = new GsonBuilder().setPrettyPrinting().create();</span>
+<span class="nc" id="L136">		return gson.toJson(this);</span>
+	}
+
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

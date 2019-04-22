@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PedirLanche.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">loja Maven Webapp</a> &gt; <a href="index.source.html" class="el_package">br.com.example.loja.controller</a> &gt; <span class="el_source">PedirLanche.java</span></div><h1>PedirLanche.java</h1><pre class="source lang-java linenums">package br.com.example.loja.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import br.com.example.loja.modelo.Banco;
+import br.com.example.loja.modelo.ItemCardapio;
+import br.com.example.loja.modelo.Lanche;
+import br.com.example.loja.modelo.Promocao;
+
+<span class="nc" id="L17">public class PedirLanche implements IAcao {</span>
+
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+<span class="nc" id="L21">		System.out.println(&quot;pedirLanche&quot;);</span>
+		
+<span class="nc" id="L23">		String slanchePedido = request.getParameter(&quot;lanche&quot;);</span>
+		
+<span class="nc bnc" id="L25" title="All 2 branches missed.">		if(slanchePedido == null)</span>
+<span class="nc" id="L26">			throw new IOException(&quot;Escolha um lanche !!!!!&quot;);</span>
+			
+<span class="nc" id="L28">		Lanche lanchePedido = Banco.getNewLanche(ItemCardapio.fromString(slanchePedido));</span>
+			
+<span class="nc bnc" id="L30" title="All 2 branches missed.">		for (ItemCardapio itemCardapio : ItemCardapio.values()) { </span>
+			
+<span class="nc" id="L32">			String stringQtdDoIngrediente = request.getParameter(itemCardapio.toString());</span>
+			
+<span class="nc bnc" id="L34" title="All 2 branches missed.">			if(stringQtdDoIngrediente == null)</span>
+<span class="nc" id="L35">				break;</span>
+			
+<span class="nc" id="L37">			int qtIngrediente = Integer.parseInt(stringQtdDoIngrediente);</span>
+			
+<span class="nc bnc" id="L39" title="All 2 branches missed.">			for (int i = 0; i &lt; qtIngrediente; i++)</span>
+<span class="nc" id="L40">				lanchePedido.addIngredienteNoLanche(Banco.getIngredienteCardapio(itemCardapio));</span>
+		}
+		
+<span class="nc" id="L43">		String sPromocao = request.getParameter(&quot;promocao&quot;);</span>
+		
+<span class="nc bnc" id="L45" title="All 2 branches missed.">		if (sPromocao != null)</span>
+		{
+<span class="nc bnc" id="L47" title="All 4 branches missed.">			switch (sPromocao) {</span>
+<span class="nc" id="L48">				case &quot;0&quot;: lanchePedido.setPromocao(Promocao.LIGHT);			break;</span>
+<span class="nc" id="L49">				case &quot;1&quot;: lanchePedido.setPromocao(Promocao.MUITA_CARNE);	break;</span>
+<span class="nc" id="L50">				case &quot;2&quot;: lanchePedido.setPromocao(Promocao.MUITO_QUEIJO);	break;</span>
+			}
+		}
+		
+<span class="nc" id="L54">		request.setAttribute(&quot;lanchePedido&quot;, Banco.saveLanchePedido(lanchePedido));</span>
+		
+<span class="nc" id="L56">		System.out.println(lanchePedido.toString());</span>
+		
+<span class="nc" id="L58">		return &quot;redirect:entrada?acao=MostrarPedidos&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

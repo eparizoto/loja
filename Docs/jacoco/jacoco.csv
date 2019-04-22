@@ -1,0 +1,13 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+loja Maven Webapp,br.com.example.loja.modelo,Promocao,3,45,0,0,1,7,1,2,1,2
+loja Maven Webapp,br.com.example.loja.modelo,Ingrediente,7,32,0,0,3,10,2,5,2,5
+loja Maven Webapp,br.com.example.loja.modelo,ItemCardapio,25,114,4,0,4,14,3,3,1,3
+loja Maven Webapp,br.com.example.loja.modelo,Banco,46,254,2,2,16,49,6,11,5,10
+loja Maven Webapp,br.com.example.loja.modelo,Lanche,54,198,3,9,17,37,10,16,7,12
+loja Maven Webapp,br.com.example.loja.controller,EditarCardapioForm,20,0,0,0,7,0,2,0,2,0
+loja Maven Webapp,br.com.example.loja.controller,PedirLanche,92,0,14,0,22,0,10,0,2,0
+loja Maven Webapp,br.com.example.loja.controller,ListarCardapio,20,0,0,0,7,0,2,0,2,0
+loja Maven Webapp,br.com.example.loja.controller,MostrarPedidos,14,0,0,0,5,0,2,0,2,0
+loja Maven Webapp,br.com.example.loja.controller,PedirLancheForm,20,0,0,0,7,0,2,0,2,0
+loja Maven Webapp,br.com.example.loja.controller,SalvarCardapio,32,0,4,0,10,0,4,0,2,0
+loja Maven Webapp,br.com.example.loja.servlet,UnicaEntradaServlet,72,0,2,0,15,0,3,0,2,0

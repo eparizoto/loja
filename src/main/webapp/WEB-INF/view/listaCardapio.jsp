@@ -14,6 +14,7 @@
 <body style="">
 
 	<h1>Nossa Loja - Cardápio</h1>
+	<hr>
 
 	<h2>Lanches:</h2>
 
@@ -57,6 +58,8 @@
 	<a href="/loja/entrada?acao=PedirLancheForm">Pedir um lanche</a>&nbsp
 	<a href="/loja/entrada?acao=MostrarPedidos">Exibir pedidos</a>&nbsp
 	<a href="/loja/entrada?acao=EditarCardapioForm">Editar Cardápio</a>	
+	<hr>
+	<h6>versão 1.0.0</h6>
 
 </body>
 

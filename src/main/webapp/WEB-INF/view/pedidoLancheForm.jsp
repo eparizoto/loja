@@ -13,12 +13,11 @@
 <body>
 
 	<h1>Nossa Loja - Pedido de Lanche</h1>
-
-
+	<hr>
 
 	<form action="${linkEntradaServlet }" method="post">
-		Escolha um Lanche:
-		<br />
+		<p>Escolha um Lanche:</p>
+		
 		
 		<table style="width: 60%">
 			<tr>

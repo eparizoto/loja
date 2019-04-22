@@ -14,6 +14,7 @@
 <body>
 
 	<h1>Nossa Loja - Pedido de Lanche</h1>
+	<hr>
 
 	<br /> Lanche pedido: ${lanchePedido.nome} Total: ${lanchePedido.valor} <br />
 

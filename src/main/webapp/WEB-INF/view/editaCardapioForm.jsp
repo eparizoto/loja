@@ -14,7 +14,8 @@
 </head>
 <body style="">
 
-	<h1>Nossa Loja - Editar Cardápio</h1>
+	<h1>Nossa Loja - Editar Cardápio</h1> 
+	<hr>
 
 	<h2>Lanches:</h2>
 

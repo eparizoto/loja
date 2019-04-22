@@ -13,6 +13,7 @@
 <body style="">
 
 	<h1>Nossa Loja - Pedidos feitos</h1>
+	<hr>
 
 	<h2>Lanches:</h2>
 
