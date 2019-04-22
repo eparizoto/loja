@@ -25,12 +25,8 @@ public class PedirLanche implements IAcao {
 		if(slanchePedido == null)
 			throw new IOException("Escolha um lanche !!!!!");
 			
-		Lanche lancheBd = Banco.getLancheCardapio(ItemCardapio.fromString(slanchePedido));
-		
-		Gson gson = new GsonBuilder().create();
-		String jsonResult = gson.toJson(lancheBd);		
-		Lanche lanchePedido = gson.fromJson(jsonResult, Lanche.class);
-		
+		Lanche lanchePedido = Banco.getNewLanche(ItemCardapio.fromString(slanchePedido));
+			
 		for (ItemCardapio itemCardapio : ItemCardapio.values()) { 
 			
 			String stringQtdDoIngrediente = request.getParameter(itemCardapio.toString());

@@ -3,6 +3,9 @@ package br.com.example.loja.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Banco {
 	
 	private static List<Lanche> lanchesCardapio = new ArrayList<Lanche>();	
@@ -98,6 +101,12 @@ public class Banco {
 			return null;
 		}
 		
+	}
+	
+	public static Lanche getNewLanche(ItemCardapio lanche) {		
+		Gson gson = new GsonBuilder().create();
+		String jsonResult = gson.toJson(Banco.getLancheCardapio(lanche));		
+		return gson.fromJson(jsonResult, Lanche.class);
 	}
 
 	public static Lanche saveLanchePedido(Lanche lanche) {

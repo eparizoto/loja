@@ -41,7 +41,7 @@
 
 		<br /> Se desejar, escolha os ingredientes adicionais do lanche: <br />
 		<c:forEach items="${ingredientes}" var="ingrediente">
-			<br><input type="number" name="${ ingrediente.nome }" min="0" max="5" value = "0"> ${ ingrediente.nome } - R$ ${ ingrediente.valor }<br>			
+			<br><input type="number" name="${ ingrediente.nome }" min="0" max="10" value = "0"> ${ ingrediente.nome } - R$ ${ ingrediente.valor }<br>			
 		</c:forEach>
 				
 		<br /> 

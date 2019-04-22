@@ -109,10 +109,7 @@ public class Lanche {
 				this.valor = this.valor.subtract((new BigDecimal(queijoFree)).multiply(Banco.getIngredienteCardapio(ItemCardapio.QUEIJO).getValor()));
 				
 				break;
-		}
-		
-		
-		
+		}		
 		
 		return this.valor;			
 	}
